@@ -1,16 +1,15 @@
 package com.itcast.reggie.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itcast.reggie.common.R;
 import com.itcast.reggie.entity.Employee;
 import com.itcast.reggie.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -93,5 +92,30 @@ public class EmployeeController {
 
         employeeService.save(employee);//save方法继承了MybatisPlus父接口IService直接调用即可
         return R.success("新增员工成功");
+    }
+
+    /**
+     * 员工信息的分页查询
+     * @param page
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @GetMapping("/page")
+    public R<Page> page(int page, int pageSize, String name) {//page中包含record与total
+        log.info("page = {}, pageSize = {}, name = {}", page, pageSize, name);
+        //1.构造分页构造器
+        Page pageInfo = new Page(page, pageSize);
+
+        //2.构造条件构造器
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper();
+        //添加过滤条件:name传递后的条件查询
+        queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
+        //添加排序条件
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
+
+        //3.执行查询
+        employeeService.page(pageInfo, queryWrapper);//处理后的数据自动封装到PageInfo中
+        return R.success(pageInfo);
     }
 }
