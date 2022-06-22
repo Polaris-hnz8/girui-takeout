@@ -1,13 +1,18 @@
 ### Example user template template
-### Example user template
+
+.git
 
 # IntelliJ project files
 .idea
 *.iml
+*.iws
+*.mli
+*.ipr
 out
 gen
 
 # Compiled class file
+target/
 *.class
 
 # Log file
