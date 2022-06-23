@@ -24,8 +24,9 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
         //适合自动填充的createtime、updatetime、createuser、updateuser
         metaObject.setValue("createTime", LocalDateTime.now());
         metaObject.setValue("updateTime", LocalDateTime.now());
-        metaObject.setValue("createUser", new Long(1));
-        metaObject.setValue("updateUser", new Long(1));
+
+        metaObject.setValue("createUser", BaseContext.getCurrentId());
+        metaObject.setValue("updateUser", BaseContext.getCurrentId());
     }
 
     /**
@@ -37,6 +38,6 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
         log.info("公共字段自动填充[update...]");
         log.info(metaObject.toString());
         metaObject.setValue("updateTime", LocalDateTime.now());
-        metaObject.setValue("updateUser", new Long(1));
+        metaObject.setValue("updateUser", BaseContext.getCurrentId());
     }
 }
