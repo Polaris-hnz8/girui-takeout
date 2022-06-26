@@ -19,6 +19,8 @@ import java.util.UUID;
 
 /**
  * 文件的上传与下载
+ * 注意：这里的图片存储方式是将上传的资源全部直接存储在云端服务器上（业务处理+存储服务）
+ * 注意：也可以采用阿里云oss对象存储服务作为图片资源存储地，相应的需要对前后端的代码进行小修改详见v2.0.x
  */
 @Slf4j
 @RestController
@@ -35,6 +37,7 @@ public class CommonController {
      */
     @PostMapping("/upload")
     public R<String> upload(MultipartFile file) {//MultipartFile的名字必须与前端发送的name保持一致
+        //用户将图片上传到服务器的指定目录中
         log.info(file.toString());
 
         //1.获取原始文件名 以及文件后缀名
@@ -67,10 +70,11 @@ public class CommonController {
      */
     @GetMapping("/download")
     public void download(String name, HttpServletResponse response) {
-        //下载指定路径的文件到服务器中
+        //从服务器指定的文件路径中下载到浏览器
         try {
             //1.通过输入流读取文件内容
             FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
+
             //2.通过输出流将文件内容写回浏览器，然后在浏览器中进行展示
             ServletOutputStream outputStream = response.getOutputStream();
 

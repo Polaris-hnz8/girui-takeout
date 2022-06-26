@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping("/category")
@@ -72,5 +74,26 @@ public class CategoryController {
         log.info("修改分类信息：{}", category);
         categoryService.updateById(category);
         return R.success("修改分类信息成功");
+    }
+
+    /**
+     * 动态的查询分类数据
+     * 根据传递的条件type值来动态的查询分类数据
+     * 页面通过数据绑定的方式自动显示到下拉框中
+     * @param category
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Category>> listCategory(Category category) {//接收String type参数
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        //1.按照类型查询
+        queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
+
+        //2.按照sort顺序排序查询结果,如果sort相同则使用updatetime降序排列
+        queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+        List<Category> list = categoryService.list(queryWrapper);
+
+        //3.返回排序结果
+        return R.success(list);
     }
 }

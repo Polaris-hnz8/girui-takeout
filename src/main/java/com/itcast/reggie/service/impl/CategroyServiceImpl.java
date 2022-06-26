@@ -6,7 +6,7 @@ import com.itcast.reggie.common.CustomException;
 import com.itcast.reggie.entity.Category;
 import com.itcast.reggie.entity.Dish;
 import com.itcast.reggie.entity.Setmeal;
-import com.itcast.reggie.mapper.CategoryMapper;
+import com.itcast.reggie.entity.mapper.CategoryMapper;
 import com.itcast.reggie.service.CategoryService;
 import com.itcast.reggie.service.DishService;
 import com.itcast.reggie.service.SetmealService;
