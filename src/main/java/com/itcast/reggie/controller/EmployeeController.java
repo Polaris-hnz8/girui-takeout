@@ -104,10 +104,10 @@ public class EmployeeController {
     public R<Page> page(int page, int pageSize, String name) {//page中包含record与total
         log.info("page = {}, pageSize = {}, name = {}", page, pageSize, name);
         //1.构造分页构造器
-        Page pageInfo = new Page(page, pageSize);
+        Page<Employee> pageInfo = new Page<>(page, pageSize);
 
         //2.构造条件构造器
-        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
         //添加过滤条件:name传递后的条件查询
         queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
         //添加排序条件
@@ -137,7 +137,7 @@ public class EmployeeController {
     }
 
     /**
-     * 根据id查询员工信息回写到edit(add)页面上
+     * 根据id查询员工信息回写到edit页面上
      * @param id
      * @return
      */
