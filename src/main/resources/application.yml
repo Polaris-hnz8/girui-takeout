@@ -17,3 +17,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID #id生成策略
+reggie:
+  # 图片资源存储在服务器上的位置
+  path: D:\upload\
