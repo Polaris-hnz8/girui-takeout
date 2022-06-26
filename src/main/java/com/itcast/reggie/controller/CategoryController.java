@@ -77,8 +77,8 @@ public class CategoryController {
     }
 
     /**
-     * 动态的查询分类数据
-     * 根据传递的条件type值来动态的查询分类数据
+     * 分类数据回显
+     * 根据传递的条件（type值）来动态的查询分类数据
      * 页面通过数据绑定的方式自动显示到下拉框中
      * @param category
      * @return

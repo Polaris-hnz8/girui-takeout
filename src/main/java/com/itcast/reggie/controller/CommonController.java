@@ -69,30 +69,26 @@ public class CommonController {
      * @param response
      */
     @GetMapping("/download")
-    public void download(String name, HttpServletResponse response) {
+    public void download(String name, HttpServletResponse response) throws IOException {
         //从服务器指定的文件路径中下载到浏览器
-        try {
-            //1.通过输入流读取文件内容
-            FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
+        //1.通过输入流读取文件内容
+        FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
 
-            //2.通过输出流将文件内容写回浏览器，然后在浏览器中进行展示
-            ServletOutputStream outputStream = response.getOutputStream();
+        //2.通过输出流将文件内容写回浏览器，然后在浏览器中进行展示
+        ServletOutputStream outputStream = response.getOutputStream();
 
-            response.setContentType("image/jpeg");
+        response.setContentType("image/jpeg");
 
-            int len = 0;
-            byte[] bytes = new byte[1024];
-            while ((len = fileInputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, len);
-                outputStream.flush();
-            }
-
-            //3.关闭资源
-            outputStream.close();
-            fileInputStream.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        int len = 0;
+        byte[] bytes = new byte[1024];
+        while ((len = fileInputStream.read(bytes)) != -1) {
+            outputStream.write(bytes, 0, len);
+            outputStream.flush();
         }
+
+        //3.关闭资源
+        outputStream.close();
+        fileInputStream.close();
+
     }
 }
