@@ -62,4 +62,15 @@ public class CategoryController {
         return R.success("分类信息删除成功");
     }
 
+    /**
+     * 根据id修改分类信息(回显功能已由前端页面实现、updatetime&updateuser会由MyMetaObjectHandler自动填充)
+     * @param category
+     * @return
+     */
+    @PutMapping
+    public R<String> update(@RequestBody Category category) {
+        log.info("修改分类信息：{}", category);
+        categoryService.updateById(category);
+        return R.success("修改分类信息成功");
+    }
 }
