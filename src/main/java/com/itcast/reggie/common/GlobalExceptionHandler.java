@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
@@ -39,6 +40,13 @@ public class GlobalExceptionHandler {
     public R<String> exceptionHandler(CustomException e) {
         log.error(e.getMessage());
         return R.error(e.getMessage());
+    }
+
+    // 非预期异常处理方法
+    @ExceptionHandler(Exception.class)
+    public R exceptionHandler(Exception e) {
+        log.error(e.getMessage());
+        return R.error("对不起,网络问题,请稍后再试");// 返回一个固定的错误提示
     }
 }
 
