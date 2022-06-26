@@ -57,7 +57,8 @@ public class CategoryController {
     @DeleteMapping
     public R<String> delete(Long id) {
         log.info("删除分类，id为:{}", id);
-        categoryService.removeById(id);
+        //categoryService.removeById(id);（不能使用IService框架提供的方法需要自定义remove方法）
+        categoryService.myRemove(id);
         return R.success("分类信息删除成功");
     }
 
