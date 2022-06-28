@@ -1,4 +1,4 @@
-package com.itcast.reggie.entity.mapper;
+package com.itcast.reggie.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.itcast.reggie.entity.Employee;

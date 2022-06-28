@@ -122,4 +122,24 @@ public class DishController {
         dishService.updateWithFlavor(dishDto);
         return R.success("修改菜品成功");
     }
+
+    /**
+     * 根据条件查询菜品dish数据
+     * @param dish
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Dish>> list(Dish dish) {//Long categoryId
+        //1.构造查询条件
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        queryWrapper.eq(Dish::getStatus, 1);
+        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+
+        //2.进行查询操作
+        List<Dish> list = dishService.list(queryWrapper);
+
+        //3.返回查询数据结果
+        return R.success(list);
+    }
 }
