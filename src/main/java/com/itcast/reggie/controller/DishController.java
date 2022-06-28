@@ -75,10 +75,10 @@ public class DishController {
 
             DishDto dishDto = new DishDto();
 
-            //（2）-1首先获取（拷贝）普通数据
+            //首先获取（拷贝）普通数据
             BeanUtils.copyProperties(item, dishDto);
 
-            //（2）-2再将获取（通过id联查）其他数据
+            //再将获取（通过id联查）其他数据
             Long categoryId = item.getCategoryId();//获取分类id
 
             Category category = categoryService.getById(categoryId);//根据分类id获取分类对象
@@ -124,7 +124,7 @@ public class DishController {
     }
 
     /**
-     * 根据条件查询菜品dish数据
+     * 根据category条件查询菜品数据（提供给新增套餐使用）
      * @param dish
      * @return
      */
