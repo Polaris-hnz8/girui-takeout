@@ -23,9 +23,11 @@ public class LoginCheckFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;//ServletRequest向下转为HttpServletRequest
         HttpServletResponse response = (HttpServletResponse) servletResponse;//ServletResponse向下转为HttpServletResponse
-        //log.info("拦截到请求：{}", request.getRequestURI());//通过日志的方式输出拦截到的资源，比System.out.println()好很多
+        log.info("拦截到请求：{}", request.getRequestURI());
+
         //首先分析过滤器具体的处理逻辑，再进行代码编写：
         //1、获取本次请求的URI
         String requestURI = request.getRequestURI();//backend/index.html
@@ -35,7 +37,9 @@ public class LoginCheckFilter implements Filter {
                 "/employee/login",
                 "/employee/logout",
                 "/backend/**",
-                "/front/**"
+                "/front/**",
+                "/user/sendMsg",
+                "/user/login"
         };
 
         //2、判断本次请求是否需要处理,检测用户的登录状态
@@ -48,7 +52,7 @@ public class LoginCheckFilter implements Filter {
             return;
         }
 
-        //4、如果需要处理则判断登录状态，如果已登录则直接放行
+        //4、如果需要处理 则判断登录状态，如果已登录则直接放行
         if (request.getSession().getAttribute("employee") != null) {
             log.info("用户已登录，用户id为：{}", request.getSession().getAttribute("employee"));
 
@@ -60,9 +64,22 @@ public class LoginCheckFilter implements Filter {
             return;
         }
 
+        //5、如果需要处理 则判断登录状态，如果已登录则直接放行
+        if (request.getSession().getAttribute("user") != null) {
+            log.info("用户已登录，用户id为：{}", request.getSession().getAttribute("user"));
+
+            //登录时将id存入当前线程中
+            Long userId = (Long) request.getSession().getAttribute("user");
+            BaseContext.setCurrentId(userId);
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         log.info("用户未登录");
-        //5、如果需要处理且未登录则返回未登录结果(通过输出流的方式向客户端页面响应数据)
+        //6、如果需要处理且未登录则返回未登录结果（通过输出流的方式向客户端页面响应数据）
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
+
         return;
     }
 

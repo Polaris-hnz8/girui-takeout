@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itcast.reggie.dto.DishDto;
 import com.itcast.reggie.entity.Dish;
 import com.itcast.reggie.entity.DishFlavor;
-import com.itcast.reggie.entity.mapper.DishMapper;
+import com.itcast.reggie.mapper.DishMapper;
 import com.itcast.reggie.service.DishFlavorService;
 import com.itcast.reggie.service.DishService;
 import lombok.extern.slf4j.Slf4j;

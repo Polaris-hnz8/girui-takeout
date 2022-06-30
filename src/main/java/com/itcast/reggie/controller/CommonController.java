@@ -89,6 +89,5 @@ public class CommonController {
         //3.关闭资源
         outputStream.close();
         fileInputStream.close();
-
     }
 }
