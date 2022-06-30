@@ -27,8 +27,8 @@ function setmealListApi(data) {
 //获取购物车内商品的集合
 function cartListApi(data) {
     return $axios({
-        //'url': '/cart/list',
-        'url': '/front/cartData.json',
+        'url': '/cart/list',
+        //'url': '/front/cartData.json',
         'method': 'get',
         params:{...data}
     })
@@ -55,7 +55,7 @@ function  updateCartApi(data){
 //删除购物车的商品
 function clearCartApi() {
     return $axios({
-        'url': '/cart/clean',
+        'url': '/cart/clear',
         'method': 'delete',
     })
 }
