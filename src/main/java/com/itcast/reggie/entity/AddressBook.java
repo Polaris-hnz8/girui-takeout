@@ -45,7 +45,7 @@ public class AddressBook implements Serializable {
     private String cityCode;
 
 
-    //市级名称
+    //市级名称 
     private String cityName;
 
 
